@@ -23,3 +23,11 @@ stages:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'drop'
         publishLocation: 'pipeline'
+
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Pay-As-You-Go (74250856-73f7-416f-9e2a-31348b685889)'
+        appType: 'webAppLinux'
+        WebAppName: 'charlieflask'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
