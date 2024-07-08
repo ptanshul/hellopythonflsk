@@ -1,0 +1,25 @@
+trigger:
+  - none  # Trigger manually for demonstration, can be set to continuous integration
+
+pool:
+  vmImage: ubuntu-latest  # Or your preferred OS
+
+stages:
+- stage: Build
+  jobs:
+  - job: BuildJob
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.9'  # Update Python version if needed
+      displayName: 'Use Python 3.9'
+    - script: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+      displayName: 'Install dependencies'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
+        publishLocation: 'pipeline'
